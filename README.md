@@ -1,4 +1,8 @@
 # Assignments GPU — AKT26
+This repo is a fork of abdelfattah83/akt26_gpu_dev. We wrote the GPU code in two files:
+
+3-ger/ger.cu
+4-gemm/gemm.cu
 ## Compilation Windows
 
 Avec un CUDA Toolkit installé et `nvcc` sur `PATH`, les scripts compilent puis
