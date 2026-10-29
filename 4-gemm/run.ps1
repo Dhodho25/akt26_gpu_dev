@@ -1,7 +1,6 @@
 param(
-    [int]$M = 4000,
-    [int]$N = 2000,
-    [int]$Repeats = 100,
+    [int]$N = 16,
+    [int]$BatchSize = 1000,
     [int]$Arch = 86
 )
 
@@ -13,14 +12,14 @@ if (-not (Get-Command nvcc -ErrorAction SilentlyContinue)) {
 Push-Location $PSScriptRoot
 try {
     $archOption = "-arch=sm_$Arch"
-    & nvcc -O2 -std=c++17 $archOption ger.cu -o ger.exe -lcublas
+    & nvcc -O2 -std=c++17 $archOption gemm.cu -o gemm.exe -lcublas
     if ($LASTEXITCODE -ne 0) {
         throw "nvcc failed with exit code $LASTEXITCODE."
     }
 
-    & .\ger.exe $M $N $Repeats
+    & .\gemm.exe $N $BatchSize
     if ($LASTEXITCODE -ne 0) {
-        throw "GER test failed with exit code $LASTEXITCODE."
+        throw "GEMM test failed with exit code $LASTEXITCODE."
     }
 }
 finally {
